@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzblog.datacenter.web.modules.sys.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.yzblog.datacenter.web.modules.sys.entity.User">
+    <id column="user_id" jdbcType="BIGINT" property="userId"/>
+    <result column="zgh" jdbcType="VARCHAR" property="zgh"/>
+    <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, zgh, pwd, username, create_time, update_time
+  </sql>
+  <sql id="NoPwd_Column_List">
+        user_id, zgh, username, create_time, update_time
+    </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="findSysUserInfo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="NoPwd_Column_List"/>
+    FROM  sys_user WHERE zgh = #{name}
+    AND pwd = #{pwd}
+  </select>
+
+  <select id="findUserInfo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="NoPwd_Column_List"/>
+    FROM  shutcm_datacenter.s_user WHERE zgh = #{name}
+  </select>
+
+  <select id="getUserByZgh" resultType="com.yzblog.datacenter.web.modules.sys.entity.User">
+  SELECT
+    <include refid="NoPwd_Column_List"/>
+  FROM shutcm_datacenter.s_user
+  where zgh = #{zgh}
+</select>
+
+</mapper>

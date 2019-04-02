@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzblog.datacenter.web.modules.sysmonitor.dao.DsSOperationLogDao">
+  <resultMap id="BaseResultMap" type="com.yzblog.datacenter.web.modules.sysmonitor.entity.DsSOperationLog">
+    <id column="LOG_ID" jdbcType="BIGINT" property="logId" />
+    <result column="LOG_TYPE" jdbcType="CHAR" property="logType" />
+    <result column="CLASS_NAME" jdbcType="VARCHAR" property="className" />
+    <result column="METHOD_NAME" jdbcType="VARCHAR" property="methodName" />
+    <result column="REQ_TIME" jdbcType="TIMESTAMP" property="reqTime" />
+    <result column="REQ_URL" jdbcType="VARCHAR" property="reqUrl" />
+    <result column="REQ_IP" jdbcType="VARCHAR" property="reqIp" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="REQ_STATUS" jdbcType="CHAR" property="reqStatus" />
+    <result column="EXCP_MESSAGE" jdbcType="VARCHAR" property="excpMessage" />
+    <result column="REQ_PARAM" jdbcType="VARCHAR" property="reqParam" />
+  </resultMap>
+  <resultMap id="LogUserResultMap" type="com.yzblog.datacenter.web.modules.sysmonitor.vo.OperationLogVO">
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="log_type" jdbcType="DECIMAL" property="logType" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="req_time" jdbcType="TIMESTAMP" property="reqTime" />
+    <result column="req_url" jdbcType="VARCHAR" property="reqUrl" />
+    <result column="req_ip" jdbcType="VARCHAR" property="reqIp" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="req_status" jdbcType="DECIMAL" property="reqStatus" />
+    <result column="excp_message" jdbcType="VARCHAR" property="excpMessage" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="req_param" jdbcType="VARCHAR" property="reqParam" />
+    <result column="xm" jdbcType="VARCHAR" property="xm" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, log_type, class_name, method_name, req_time, req_url, req_ip, user_id, req_status,
+    excp_message,req_param
+  </sql>
+  <sql id="LogUser_Column_List">
+    A.log_id, A.log_type, A.class_name, A.method_name, A.req_time, A.req_url, A.req_ip, A.user_id, A.req_status,
+    A.excp_message,B.zgh,B.xm,A.req_param
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ds_s_operation_log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selCountByApplicationUrl" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ds_s_operation_log
+    where req_url = #{saUrl,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ds_s_operation_log
+    where log_id = #{logId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yzblog.datacenter.web.modules.sysmonitor.entity.DsSOperationLog">
+    insert into ds_s_operation_log (log_id,log_type, class_name,
+    method_name, req_time, req_url,
+    req_ip, user_id, req_status,
+    excp_message,req_param)
+    values  #{logId} ,#{logType,jdbcType=DECIMAL}, #{className,jdbcType=VARCHAR},
+    #{methodName,jdbcType=VARCHAR}, #{reqTime,jdbcType=TIMESTAMP}, #{reqUrl,jdbcType=VARCHAR},
+    #{reqIp,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{reqStatus,jdbcType=DECIMAL},
+    #{excpMessage,jdbcType=VARCHAR},#{reqParam,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yzblog.datacenter.web.modules.sysmonitor.entity.DsSOperationLog">
+    insert into ds_s_operation_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="methodName != null">
+        method_name,
+      </if>
+      <if test="reqTime != null">
+        req_time,
+      </if>
+      <if test="reqUrl != null">
+        req_url,
+      </if>
+      <if test="reqIp != null">
+        req_ip,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="reqStatus != null">
+        req_status,
+      </if>
+      <if test="excpMessage != null">
+        excp_message,
+      </if>
+      <if test="reqParam != null">
+        req_param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logType != null">
+        #{logType,jdbcType=DECIMAL},
+      </if>
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqTime != null">
+        #{reqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqUrl != null">
+        #{reqUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="reqIp != null">
+        #{reqIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="reqStatus != null">
+        #{reqStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="excpMessage != null">
+        #{excpMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null">
+        #{reqParam,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzblog.datacenter.web.modules.sysmonitor.entity.DsSOperationLog">
+    update ds_s_operation_log
+    <set>
+      <if test="logType != null">
+        log_type = #{logType,jdbcType=DECIMAL},
+      </if>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+        method_name = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqTime != null">
+        req_time = #{reqTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqUrl != null">
+        req_url = #{reqUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="reqIp != null">
+        req_ip = #{reqIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqStatus != null">
+        req_status = #{reqStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="excpMessage != null">
+        excp_message = #{excpMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null">
+        req_param = #{reqParam,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yzblog.datacenter.web.modules.sysmonitor.entity.DsSOperationLog">
+    update ds_s_operation_log
+    set log_type = #{logType,jdbcType=DECIMAL},
+    class_name = #{className,jdbcType=VARCHAR},
+    method_name = #{methodName,jdbcType=VARCHAR},
+    req_time = #{reqTime,jdbcType=TIMESTAMP},
+    req_url = #{reqUrl,jdbcType=VARCHAR},
+    req_ip = #{reqIp,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=VARCHAR},
+    req_status = #{reqStatus,jdbcType=DECIMAL},
+    excp_message = #{excpMessage,jdbcType=VARCHAR},
+    req_param = #{reqParam,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectOperationLog" resultMap="LogUserResultMap">
+    select DISTINCT
+    <include refid="LogUser_Column_List" />
+    from ds_s_operation_log A left join s_user B on A.user_id = B.user_id
+    where 1=1
+    <if test="page.parameter != null and page.parameter.className != null">
+      and A.class_name like '%${page.parameter.className}%'
+    </if>
+    <if test="page.parameter != null and page.parameter.username != null">
+      and B.zgh like '%${page.parameter.username}%'
+    </if>
+    <if test="page.parameter != null and page.parameter.xm != null">
+      and B.xm like '%${page.parameter.xm}%'
+    </if>
+  </select>
+</mapper>
