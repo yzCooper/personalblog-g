@@ -9,8 +9,14 @@ import java.io.Serializable;
  **/
 public class UserRoleVO implements Serializable {
 
-    private String id;//角色ID
-    private String text;//角色名称
+    /**
+     * 角色ID
+     */
+    private String id;
+    /**
+     * 角色名称
+     */
+    private String text;
 
     public String getId() {
         return id;

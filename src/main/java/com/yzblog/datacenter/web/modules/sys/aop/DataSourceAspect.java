@@ -33,7 +33,11 @@ public class DataSourceAspect {
             e.printStackTrace();
         }
     }
-    //执行完切面后，将线程共享中的数据源名称清空
+
+    /**
+     * 执行完切面后，将线程共享中的数据源名称清空
+     * @param joinPoint
+     */
     @After("execution(* com.yzblog.datacenter.web.modules.*.service..*.*(..))")
     public void after(JoinPoint joinPoint){
         DataSourceHolder.clearDataSource();

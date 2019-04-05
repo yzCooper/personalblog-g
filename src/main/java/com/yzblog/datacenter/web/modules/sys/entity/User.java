@@ -5,12 +5,30 @@ import java.util.Date;
 
 public class User implements Serializable {
 
-    private Long userId; //主键--UUID
-    private Date createTime;//创建时间
-    private Date updateTime;//更新时间
-    private String zgh;//登录名称
-    private String pwd;//密码
-    private String username;//姓名
+    /**
+     * 主键--UUID
+     */
+    private Long userId;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+    /**
+     * 登录名称
+     */
+    private String zgh;
+    /**
+     * 密码
+     */
+    private String pwd;
+    /**
+     * 姓名
+     */
+    private String username;
 
 
     private static final long serialVersionUID = 1L;
